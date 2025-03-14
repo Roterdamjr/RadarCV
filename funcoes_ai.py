@@ -1,5 +1,5 @@
 import fitz
-from funcoes import fn_busca_curriculo
+from funcoes import fn_busca_conteudo_curriculo
 
 def fn_busca_job():
   return '''
@@ -37,7 +37,7 @@ def fn_busca_resumo(file_path):
               "Objetivo:** Avaliar um currículo com base em uma vaga específica e calcular a pontuação final. A nota máxima é 10.0.
               '''
 
-  text +=  fn_busca_curriculo(file_path)
+  text +=  fn_busca_conteudo_curriculo(file_path)
   text += '''
               Por favor, gere um resumo do currículo fornecido, formatado em Markdown, seguindo rigorosamente o modelo abaixo. **Não adicione seções extras, tabelas ou qualquer outro tipo de formatação diferente da especificada.** Preencha cada seção com as informações relevantes, garantindo que o resumo seja preciso e focado.
 

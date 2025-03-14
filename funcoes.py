@@ -5,7 +5,7 @@ from tkinter import filedialog
 import os
 
 
-def fn_busca_curriculo(file_path):
+def fn_busca_conteudo_curriculo(file_path):
     text = ""
     with fitz.open(file_path) as doc:
         for page in doc:
@@ -46,7 +46,7 @@ def fn_insere_curriculo(nome_candidato, caminho_pdf):
             text += page.get_text()
     
     db.insert({'nome': nome_candidato,  'content': text})
-    return f"Arquivo salvo: {nome_candidato}" 
+ 
 
 def fn_consulta_curriculos():
   db = TinyDB('curriculos.json')
