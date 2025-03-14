@@ -21,7 +21,7 @@ if st.button("Excluir"):
     fn_exclui_curriculos()
     st.success("Currículos excluídos com sucesso!")
 
-
+ 
 st.header("Upload de Currículo")
 
 nome_candidato = st.text_input("Nome do candidato", key="nome_candidato")
