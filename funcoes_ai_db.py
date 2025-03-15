@@ -1,4 +1,21 @@
-from tinydb import TinyDB
+from tinydb import TinyDB, Query
+
+
+def fn_quebra_linhas(titulo, lista):
+    texto = ""
+    for item in lista:
+        texto += item + '\n'
+    return titulo + '\n' + texto + '\n\n'
+
+def fn_busca_curriculo_db(nome_candidato):
+    db = TinyDB('curriculos.json')
+    QueryDB = Query()
+    resultado = db.search(QueryDB.nome == nome_candidato)
+
+    if resultado:
+        return resultado[0]['content']
+    else:
+        return "    " 
 
 def fn_busca_job():
 
@@ -22,16 +39,14 @@ def fn_busca_job():
     else:
         print("Nenhuma vaga encontrada no banco de dados.")
 
-    return nome_vaga, prerequisitos,diferenciais, principais_atividades
+    return fn_quebra_linhas('prerequisitos', prerequisitos) + fn_quebra_linhas('diferenciais',diferenciais) + fn_quebra_linhas('principais_atividades',principais_atividades)
 
-
-def fn_busca_resumo(file_path):
+def fn_busca_resumo(curriculo):
     text = '''
               "Objetivo:** Avaliar um currículo com base em uma vaga específica e calcular a pontuação final. A nota máxima é 10.0.
               '''
-
-    text +=  fn_busca_curriculo_db(file_path)
-
+    
+    text +=  curriculo
 
     text += '''
               Por favor, gere um resumo do currículo fornecido, formatado em Markdown, seguindo rigorosamente o modelo abaixo. **Não adicione seções extras, tabelas ou qualquer outro tipo de formatação diferente da especificada.** Preencha cada seção com as informações relevantes, garantindo que o resumo seja preciso e focado.
@@ -99,12 +114,4 @@ def fn_gerar_score(cv, job):
     return text
 
 
-nome_vaga, prerequisitos,diferenciais, principais_atividades = fn_busca_job()
-print('******************************')
-print(nome_vaga)
-print('******************************')
-print(prerequisitos)
-print('******************************')
-print(diferenciais)
-print('******************************')
-print(principais_atividades)
+print(fn_busca_job())
