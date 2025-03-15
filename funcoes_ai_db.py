@@ -1,44 +1,39 @@
-import fitz
-from funcoes import fn_busca_conteudo_curriculo
+from tinydb import TinyDB
 
 def fn_busca_job():
-  return '''
-activities
-Gerenciar o time Comercial
-Desenhar estratégias de B2B para escalar o faturamento
-Definir e acompanhar metas do B2B com o time
-Acompanhar e ajudar o time a executar as estratégias definidas
-Reportar resultados e projeções dos seus KPIs
 
+    db = TinyDB("cargos.json")  # Substitua pelo nome correto do arquivo
+    dados = db.storage.read()
 
-prequisites
-Experiência comprovada como Gestor de Vendas, Líder Comercial, Diretor Comercial ou afins
-Experiência comprovada em Vendas B2B (business to business)
-Experiência em empresas de Infoprodutos
-Proatividade e curiosidade, buscando constantemente aprender e melhorar as habilidades.
-Foco em bater as metas estabelecidas para o time de Vendas
-Disponibilidade para trabalho em período integral (full time)
+    if dados:
+        dados = db.all()  # Pega todos os registros corretamente
+        for vaga in dados:
+            nome_vaga = vaga.get("nome", "Nome não encontrado")
 
+            prerequisitos = vaga.get("prerequisitos", [])
+            prerequisitos = [p.strip("',") for p in prerequisitos]
 
-differentials
-Conhecimento da metodologia VTSD (Leandro Ladeira)
-Conhecimento avançado de Funis de Venda, com uma abordagem estratégica e eficaz na aquisição e retenção de clientes
-Interesse por Programação e Tecnologia (fique tranquilo, NÃO é necessário saber programar)
-Experiência como Gestor Comercial no nicho de Tecnologia em geral, Programação ou Data Science, proporcionando uma compreensão mais profunda do nosso público-alvo
+            diferenciais = vaga.get("diferenciais", [])
+            diferenciais = [p.strip("',") for p in diferenciais]
 
+            principais_atividades = vaga.get("principais_atividades", [])
+            principais_atividades = [p.strip("',") for p in principais_atividades]
 
-        '''
+    else:
+        print("Nenhuma vaga encontrada no banco de dados.")
 
+    return nome_vaga, prerequisitos,diferenciais, principais_atividades
 
 
 def fn_busca_resumo(file_path):
-
-  text = '''
+    text = '''
               "Objetivo:** Avaliar um currículo com base em uma vaga específica e calcular a pontuação final. A nota máxima é 10.0.
               '''
 
-  text +=  fn_busca_conteudo_curriculo(file_path)
-  text += '''
+    text +=  fn_busca_curriculo_db(file_path)
+
+
+    text += '''
               Por favor, gere um resumo do currículo fornecido, formatado em Markdown, seguindo rigorosamente o modelo abaixo. **Não adicione seções extras, tabelas ou qualquer outro tipo de formatação diferente da especificada.** Preencha cada seção com as informações relevantes, garantindo que o resumo seja preciso e focado.
 
             **Formato de Output Esperado:**
@@ -59,10 +54,10 @@ def fn_busca_resumo(file_path):
             ## Idiomas
             idiomas aqui
             '''
-  return text
+    return text
 
 def fn_busca_opniao(cv, job ):
-  text ='''
+    text ='''
           Por favor, analise o currículo fornecido em relação à descrição da vaga aplicada e crie uma opinião ultra crítica e detalhada. A sua análise deve incluir os seguintes pontos:
             Você deve pensar como o recrutador chefe que está analisando e gerando uma opnião descritiva sobre o curriculo do canditato que se candidatou para a vaga
 
@@ -77,15 +72,15 @@ def fn_busca_opniao(cv, job ):
             Sua análise deve ser objetiva, baseada em evidências apresentadas no currículo e na descrição da vaga. Seja detalhado e forneça uma avaliação honesta dos pontos fortes e fracos do candidato em relação à vaga.
 
             **Currículo Original:**
-  '''
-  text += cv  +  '**Descrição da Vaga:** '+ job
-  text += 'Você deve devolver essa analise critica formatada como se fosse um relatorio analitico do curriculum com a vaga, deve estar formatado com titulos grandes em destaques'
-  return text
-
+        '''
+    text += cv  +  '**Descrição da Vaga:** '+ job
+    text += 'Você deve devolver essa analise critica formatada como se fosse um relatorio analitico do curriculum com a vaga, deve estar formatado com titulos grandes em destaques'
+    
+    return text
 
 def fn_gerar_score(cv, job):
-  text ='''
-  **Objetivo:** Avaliar um currículo com base em uma vaga específica e calcular a pontuação final. A nota máxima é 10.0.
+    text ='''
+            **Objetivo:** Avaliar um currículo com base em uma vaga específica e calcular a pontuação final. A nota máxima é 10.0.
 
             **Instruções:**
 
@@ -99,6 +94,17 @@ def fn_gerar_score(cv, job):
             Curriculo do candidato
             '''
    
-  text += cv
-  text += 'Vaga que o candidato está se candidatando' + job
-  return text
+    text += cv
+    text += 'Vaga que o candidato está se candidatando' + job
+    return text
+
+
+nome_vaga, prerequisitos,diferenciais, principais_atividades = fn_busca_job()
+print('******************************')
+print(nome_vaga)
+print('******************************')
+print(prerequisitos)
+print('******************************')
+print(diferenciais)
+print('******************************')
+print(principais_atividades)

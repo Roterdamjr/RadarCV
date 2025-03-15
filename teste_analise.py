@@ -1,6 +1,6 @@
 
 from google import genai
-from funcoes_ai import fn_busca_job, fn_busca_resumo, fn_busca_opniao, fn_gerar_score
+from funcoes_ai_pdf import fn_busca_job, fn_busca_resumo, fn_busca_opniao, fn_gerar_score
 from funcoes import fn_busca_conteudo_curriculo
 import os
 from dotenv import load_dotenv

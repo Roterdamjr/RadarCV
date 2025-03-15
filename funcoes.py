@@ -14,6 +14,7 @@ def fn_busca_conteudo_curriculo(file_path):
     return text
 
 
+
 def fn_insere_cargo( id, nome, prerequisitos, diferenciais, atividades):
     db = TinyDB('cargos.json')
     cargo = {

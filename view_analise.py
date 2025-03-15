@@ -1,3 +1,7 @@
+import streamlit as st
+
+
+st.title("Análise de Currículos")
 
 if st.button("Analisar"):
     fn_exclui_curriculos()

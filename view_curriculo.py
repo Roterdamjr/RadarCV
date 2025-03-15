@@ -3,8 +3,15 @@ import streamlit as st
 import os
 import fitz  
 from tinydb import TinyDB, Query
+import shutil
 
 
+def limpar_pasta_temp():
+    try:
+        shutil.rmtree("temp")  # Remove toda a pasta
+        os.makedirs("temp", exist_ok=True)  # Recria a pasta vazia
+    except Exception as e:
+        st.error(f"Erro ao limpar a pasta temporária: {e}")
 
 st.title("Cadastro de Currículos")
 
@@ -38,4 +45,6 @@ if uploaded_file is not None:
 
 if st.button("Gravar"):
     fn_insere_curriculo(nome_candidato ,file_path)
+    limpar_pasta_temp()
     st.experimental_rerun()
+
