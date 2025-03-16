@@ -57,13 +57,16 @@ def fn_exclui_curriculos():
     db = TinyDB('curriculos.json')
     db.truncate()
  
-def fn_inserir_analise(nome, resumo,diferenciais,nota):
+def fn_inserir_analise_db(nome, resumo,opniao,nota):
     db = TinyDB('analises.json')
     analise = {
       'nome': nome,
       'resumo': resumo,
-      'opniao': diferenciais,
+      'opniao': opniao,
       'nota': nota 
     }
     db.insert(analise)
 
+def fn_exclui_analise_db():
+    db = TinyDB('analises.json')
+    db.truncate()

@@ -41,7 +41,7 @@ if uploaded_file is not None:
     with open(file_path, "wb") as f:
         f.write(uploaded_file.getbuffer())
 
-    st.write(f"Arquivo {uploaded_file.name} foi salvo em: {file_path}")
+    st.write(f"Arquivo {uploaded_file.name} foi salvo")
 
 if st.button("Gravar"):
     fn_insere_curriculo(nome_candidato ,file_path)
