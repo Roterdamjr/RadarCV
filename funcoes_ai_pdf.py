@@ -60,7 +60,7 @@ def fn_busca_resumo(file_path):
             '''
   return text
 
-def fn_busca_opniao(cv, job ):
+def fn_busca_opiniao(cv, job ):
   text ='''
           Por favor, analise o currículo fornecido em relação à descrição da vaga aplicada e crie uma opinião ultra crítica e detalhada. A sua análise deve incluir os seguintes pontos:
             Você deve pensar como o recrutador chefe que está analisando e gerando uma opnião descritiva sobre o curriculo do canditato que se candidatou para a vaga

@@ -2,11 +2,15 @@ import streamlit as st
 import asyncio
 from dotenv import load_dotenv
 from google import genai
-from funcoes_ai_db import fn_busca_resumo, fn_busca_curriculo_db, fn_busca_job,fn_busca_opniao,fn_gerar_score
-from funcoes import fn_inserir_analise_db,fn_exclui_analise_db
+from funcoes_ai_db import fn_busca_resumo, fn_busca_curriculo_db, fn_busca_job,fn_busca_opiniao,fn_gerar_score
+from funcoes import fn_inserir_analise_db,fn_exclui_analise_db, fn_busca_candidatos
 import os
 
+
+
 def fn_gera_response(prompt):
+    client = genai.Client(api_key=os.getenv("API_KEY"))
+
     response_text = ""
     response = client.models.generate_content_stream(
         model="gemini-2.0-flash",
@@ -17,39 +21,38 @@ def fn_gera_response(prompt):
         response_text += chunk.text 
     return response_text
 
+
 st.title("Análise de Currículos")
 
 load_dotenv()
 
-try:
-    loop = asyncio.get_event_loop()
-except RuntimeError:
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-
-client = genai.Client(api_key=os.getenv("API_KEY"))
+fn_exclui_analise_db()
 
 if st.button("Analisar"):
-    nome_candidato ='Bart'
+ 
+    for nome_candidato in fn_busca_candidatos():
+       # nome_candidato = 'Bart'
+        st.write(f"Analisando candidato: **{nome_candidato}**")
+        curriculo = fn_busca_curriculo_db(nome_candidato)
 
-    ##################### Resumo ######################
-    curriculo = fn_busca_curriculo_db(nome_candidato)
-    prompt = fn_busca_resumo(curriculo)
-    resumo = fn_gera_response(prompt)
-    st.text_area("Resumo", value=fn_gera_response(prompt), height=300)
-    #st.write('Gerando resumo!')
-    ##################### Opniao ######################
-    prompt = fn_busca_opniao(curriculo, fn_busca_job())
-    opniao = fn_gera_response(prompt)
-    st.text_area("Opniao", value=fn_gera_response(prompt), height=300)
-   # st.write('Gerando opnião!')
-    ##################### score ######################
-    prompt = fn_gerar_score(curriculo, fn_busca_job())
-    nota = fn_gera_response(prompt)
-    st.text_area("Score", value=fn_gera_response(prompt), height=300)
-    #st.write('Gerando Nota!')
+        with st.status("Gerando resumo..."):
+            prompt = fn_busca_resumo(curriculo)
+            resumo = fn_gera_response(prompt)
+            if resumo:  # Only proceed if resumo was generated successfully
+                st.write("Resumo:", resumo)
 
-    fn_exclui_analise_db()
-   # fn_inserir_analise_db(nome_candidato, resumo,opniao,nota)
+        with st.status("Gerando opinião..."):
+            prompt = fn_busca_opiniao(curriculo, fn_busca_job())
+            opiniao = fn_gera_response(prompt)
+            if opiniao:  
+                st.write("Opiniao:", opiniao)
 
-    st.write('Pronto!')
+        with st.status("Calculando nota..."):
+            prompt = fn_gerar_score(curriculo, fn_busca_job())
+            nota = fn_gera_response(prompt)
+            if nota:  
+                st.write("Nota:", nota)
+    
+        fn_inserir_analise_db(nome_candidato, resumo,opiniao,nota)
+
+st.write('Pronto!')

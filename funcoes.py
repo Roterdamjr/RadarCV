@@ -4,7 +4,6 @@ import tkinter as tk
 from tkinter import filedialog
 import os
 
-
 def fn_busca_conteudo_curriculo(file_path):
     text = ""
     with fitz.open(file_path) as doc:
@@ -12,8 +11,6 @@ def fn_busca_conteudo_curriculo(file_path):
             text += page.get_text()
 
     return text
-
-
 
 def fn_insere_cargo( id, nome, prerequisitos, diferenciais, atividades):
     db = TinyDB('cargos.json')
@@ -57,12 +54,12 @@ def fn_exclui_curriculos():
     db = TinyDB('curriculos.json')
     db.truncate()
  
-def fn_inserir_analise_db(nome, resumo,opniao,nota):
+def fn_inserir_analise_db(nome, resumo,opiniao,nota):
     db = TinyDB('analises.json')
     analise = {
       'nome': nome,
       'resumo': resumo,
-      'opniao': opniao,
+      'opiniao': opiniao,
       'nota': nota 
     }
     db.insert(analise)
@@ -70,3 +67,8 @@ def fn_inserir_analise_db(nome, resumo,opniao,nota):
 def fn_exclui_analise_db():
     db = TinyDB('analises.json')
     db.truncate()
+
+def fn_busca_candidatos():
+    db = TinyDB('curriculos.json')
+    return [item["nome"] for item in db.all()]
+
