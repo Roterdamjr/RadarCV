@@ -113,5 +113,3 @@ def fn_gerar_score(cv, job):
     text += 'Vaga que o candidato está se candidatando' + job
     return text
 
-
-print(fn_busca_job())

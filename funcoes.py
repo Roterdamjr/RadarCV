@@ -72,3 +72,17 @@ def fn_busca_candidatos():
     db = TinyDB('curriculos.json')
     return [item["nome"] for item in db.all()]
 
+def fn_exclui_analise(nome_procurado):
+    db = TinyDB('analises.json')
+    Candidato = Query()
+    resultados = db.search(Candidato.nome == nome_procurado)
+
+    if resultados:
+        db.remove(Candidato.nome == nome_procurado)
+        db.close()
+        return True
+    else:
+        db.close()
+        return False
+
+print(fn_exclui_analise('Bart'))
