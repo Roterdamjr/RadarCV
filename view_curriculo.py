@@ -1,4 +1,4 @@
-from funcoes import fn_insere_curriculo, fn_consulta_curriculos, fn_exclui_curriculos
+from funcoes import fn_insere_curriculo, fn_consulta_curriculos_db, fn_exclui_curriculos_db
 import streamlit as st
 import os
 import fitz  
@@ -17,7 +17,7 @@ st.title("Cadastro de Currículos")
 
 st.header("Currículos Cadastrados")
 
-curriculos = fn_consulta_curriculos()
+curriculos = fn_consulta_curriculos_db()
 if curriculos:
     for curriculo in curriculos:
         st.write(curriculo)
@@ -25,7 +25,7 @@ else:
     st.write("Nenhum currículo cadastrado ainda.")
 
 if st.button("Excluir"):
-    fn_exclui_curriculos()
+    fn_exclui_curriculos_db()
     st.success("Currículos excluídos com sucesso!")
 
  
@@ -46,5 +46,5 @@ if uploaded_file is not None:
 if st.button("Gravar"):
     fn_insere_curriculo(nome_candidato ,file_path)
     limpar_pasta_temp()
-    st.experimental_rerun()
+    st.rerun()
 

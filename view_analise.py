@@ -3,7 +3,7 @@ import asyncio
 from dotenv import load_dotenv
 from google import genai
 from funcoes_ai_db import fn_busca_resumo, fn_busca_curriculo_db, fn_busca_job,fn_busca_opiniao,fn_gerar_score
-from funcoes import fn_inserir_analise_db,fn_exclui_analise_db,  fn_exclui_candidato,fn_busca_candidatos
+from funcoes import fn_inserir_analise_db,fn_exclui_analises_db,  fn_busca_curriculos_db,fn_exclui_analise_db, fn_busca_nomes_analisados_db
 import os 
 
 def fn_gera_response(prompt):
@@ -25,13 +25,29 @@ st.title("Análise de Currículos")
 
 load_dotenv()
 
-nome_candidato = st.selectbox("Selecione um Candidato:", [""] + fn_busca_candidatos())
+
+st.header("Análises Realizadas")
+
+analises = fn_busca_nomes_analisados_db()
+if analises:
+    for analise in analises:
+        st.write(analise)
+else:
+    st.write("Nenhuma analise realizada ainda.")
+
+if st.button("Excluir"):
+    fn_exclui_analises_db()
+    st.success("Análises excluídas com sucesso!")
+
+ 
+nome_candidato = st.selectbox("Selecione um Candidato:", [""] + fn_busca_curriculos_db())
 
 if st.button("Analisar"):
-    fn_exclui_candidato(nome_candidato)
+    fn_exclui_analise_db(nome_candidato)
 
     st.write(f"Analisando candidato: **{nome_candidato}**")
     curriculo = fn_busca_curriculo_db(nome_candidato)
+
 
     with st.status("Gerando resumo..."):
         prompt = fn_busca_resumo(curriculo)
@@ -47,6 +63,7 @@ if st.button("Analisar"):
 
     with st.status("Calculando nota..."):
         prompt = fn_gerar_score(curriculo, fn_busca_job())
+
         nota = fn_gera_response(prompt)
         if nota:  
             st.write("Nota:", nota)
@@ -54,3 +71,5 @@ if st.button("Analisar"):
     fn_inserir_analise_db(nome_candidato, resumo,opiniao,nota)
 
     st.write('Pronto!')
+
+

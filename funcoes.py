@@ -46,34 +46,20 @@ def fn_insere_curriculo(nome_candidato, caminho_pdf):
     db.insert({'nome': nome_candidato,  'content': text})
  
 
-def fn_consulta_curriculos():
+def fn_busca_curriculos_db():
   db = TinyDB('curriculos.json')
   return [item['nome'] for item in db.all() if 'nome' in item]
 
-def fn_exclui_curriculos():
+def fn_exclui_curriculos_db():
     db = TinyDB('curriculos.json')
     db.truncate()
- 
-def fn_inserir_analise_db(nome, resumo,opiniao,nota):
-    db = TinyDB('analises.json')
-    analise = {
-      'nome': nome,
-      'resumo': resumo,
-      'opiniao': opiniao,
-      'nota': nota 
-    }
-    db.insert(analise)
 
-def fn_exclui_analise_db():
-    db = TinyDB('analises.json')
-    db.truncate()
-
-def fn_busca_candidatos():
+def fn_busca_candidatos_db():
     db = TinyDB('curriculos.json')
     return [item["nome"] for item in db.all()]
 
-def fn_exclui_analise(nome_procurado):
-    db = TinyDB('analises.json')
+def fn_exclui_curriculo_db(nome_procurado):
+    db = TinyDB('curriculos.json')
     Candidato = Query()
     resultados = db.search(Candidato.nome == nome_procurado)
 
@@ -85,4 +71,52 @@ def fn_exclui_analise(nome_procurado):
         db.close()
         return False
 
-print(fn_exclui_analise('Bart'))
+ 
+def fn_inserir_analise_db(nome, resumo,opiniao,nota):
+    db = TinyDB('analises.json')
+    analise = {
+      'nome': nome,
+      'resumo': resumo,
+      'opiniao': opiniao,
+      'nota': nota 
+    }
+    db.insert(analise)
+
+
+def fn_busca_nomes_analisados_db():
+    db = TinyDB('analises.json')
+    return [item["nome"] for item in db.all()]
+
+def fn_busca_analise_por_nome(nome):
+    """Busca os dados de análise de um nome específico no banco de dados."""
+    db = TinyDB('analises.json')
+    Analise = Query()
+    resultado = db.search(Analise.nome == nome)
+    if resultado:
+        return resultado[0]  # Retorna o primeiro resultado encontrado
+    return None 
+
+
+def fn_exclui_analises_db():
+    db = TinyDB('analises.json')
+    db.truncate()
+
+def fn_exclui_analise_db(nome_procurado):
+    db = TinyDB('analises.json')
+    Analise = Query()
+    resultados = db.search(Analise.nome == nome_procurado)
+'''
+def fn_busca_nota_final(nome):
+    db = TinyDB('analises.json')
+    Analise = Query()
+    resultado = db.search(Analise.nome == nome)
+
+    if resultado:
+        texto = resultado[0].get('nota')
+        indice = texto.find('**Nota Final:**')
+        nota_final = float(texto[indice+15 : indice+21])
+        return nota_final
+    else:
+        return None
+        '''
+
