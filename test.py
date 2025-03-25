@@ -1,4 +1,4 @@
-import streamlit as st
+
 import asyncio
 from dotenv import load_dotenv
 from google import genai
@@ -7,37 +7,26 @@ from funcoes import fn_inserir_analise_db,fn_exclui_analises_db,  fn_busca_curri
 import os 
 
 
-
-st.title("Análise de Currículos")
-
-
 nome_candidato='Bart'
 
-
-
-st.write(f"Analisando candidato: **{nome_candidato}**")
 curriculo = fn_busca_curriculo_db(nome_candidato)
 
 
-with st.status("Gerando resumo..."):
-    prompt = fn_busca_resumo(curriculo)
-    print('**************************************************************************************')
-    print(prompt)
 
+prompt = fn_busca_resumo(curriculo)
+with open('saida/01-resumo.txt', "w", encoding="utf-8") as arquivo:
+    arquivo.write(prompt)
 
-with st.status("Gerando opinião..."):
-    prompt = fn_busca_opiniao(curriculo, fn_busca_job())
-    print('**************************************************************************************')
-    print(prompt)
+prompt = fn_busca_opiniao(curriculo, fn_busca_job())
+with open('saida/02-opiniao.txt', "w", encoding="utf-8") as arquivo:
+    arquivo.write(prompt)
 
-
-with st.status("Calculando nota..."):
-    prompt = fn_gerar_score(curriculo, fn_busca_job())
-    print('**************************************************************************************')
-    print(prompt)
+prompt = fn_gerar_score(curriculo, fn_busca_job())
+with open('saida/03-score.txt', "w", encoding="utf-8") as arquivo:
+    arquivo.write(prompt)
 
 
 
-st.write('Pronto!')
+
 
 

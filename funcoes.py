@@ -3,6 +3,7 @@ from tinydb import TinyDB, Query
 import tkinter as tk
 from tkinter import filedialog
 import os
+import re 
 
 def fn_busca_conteudo_curriculo(file_path):
     text = ""
@@ -105,18 +106,34 @@ def fn_exclui_analise_db(nome_procurado):
     db = TinyDB('analises.json')
     Analise = Query()
     resultados = db.search(Analise.nome == nome_procurado)
-'''
+
 def fn_busca_nota_final(nome):
     db = TinyDB('analises.json')
     Analise = Query()
-    resultado = db.search(Analise.nome == nome)
+    result_raw = db.search(Analise.nome == nome)
 
-    if resultado:
-        texto = resultado[0].get('nota')
-        indice = texto.find('**Nota Final:**')
-        nota_final = float(texto[indice+15 : indice+21])
-        return nota_final
+    if not result_raw:
+        print(f"Nenhuma análise encontrada para {nome}.")
+        return None  # Or some other appropriate value to indicate no result
+
+    # Access the first (and likely only) dictionary in the list
+    first_result = result_raw[0]
+
+    # Convert the relevant part of the dictionary to a string for regex
+    result_text = str(first_result)
+
+    pattern = r"(?i)Pontuação Final[:\s]*([\d,.]+(?:/\d{1,2})?)"
+    match = re.search(pattern, result_text)
+
+    if match:
+        nota_final = match.group(1)
+        #print(f"A pontuação final de {nome} é: {nota_final}")
     else:
-        return None
-        '''
+        #print(f"Nenhuma pontuação final encontrada para {nome}.")
+        nota_final = None  # Or some other appropriate value
 
+    return nota_final
+
+
+
+print(fn_busca_nota_final('Bart'))
