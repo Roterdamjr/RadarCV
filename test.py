@@ -1,32 +1,30 @@
+import streamlit as st
+import plotly.express as px
+import pandas as pd
 
-import asyncio
-from dotenv import load_dotenv
-from google import genai
-from funcoes_ai_db import fn_busca_resumo, fn_busca_curriculo_db, fn_busca_job,fn_busca_opiniao,fn_gerar_score
-from funcoes import fn_inserir_analise_db,fn_exclui_analises_db,  fn_busca_curriculos_db,fn_exclui_analise_db, fn_busca_nomes_analisados_db
-import os 
+# (Seu código para buscar nomes e notas aqui)
+def fn_busca_nomes_analisados_db():
+    return ["Alice", "Bob", "Charlie", "David"]
 
+def fn_busca_nota_final(nome):
+    grades = {"Alice": 8.5, "Bob": 7.2, "Charlie": 9.0, "David": 6.8}
+    return grades.get(nome, 0)
 
-nome_candidato='Bart'
+st.title("Ranking de Nomes por Nota (Plotly)")
 
-curriculo = fn_busca_curriculo_db(nome_candidato)
+nomes_analisados = fn_busca_nomes_analisados_db()
+data = []
+for nome in nomes_analisados:
+    nota_final = fn_busca_nota_final(nome)
+    data.append({"Nome": nome, "Nota Final": nota_final})
 
+df = pd.DataFrame(data).sort_values(by="Nota Final", ascending=False)
 
+# Criar o gráfico de barras com Plotly Express (uma interface de alto nível para Plotly)
+fig = px.bar(df, x="Nome", y="Nota Final",
+             title="Ranking de Nomes por Nota Final",
+             labels={"Nota Final": "Nota Final", "Nome": "Nome"})
+fig.update_layout(xaxis_tickangle=-45, xaxis_title="Nome", yaxis_title="Nota Final")
 
-prompt = fn_busca_resumo(curriculo)
-with open('saida/01-resumo.txt', "w", encoding="utf-8") as arquivo:
-    arquivo.write(prompt)
-
-prompt = fn_busca_opiniao(curriculo, fn_busca_job())
-with open('saida/02-opiniao.txt', "w", encoding="utf-8") as arquivo:
-    arquivo.write(prompt)
-
-prompt = fn_gerar_score(curriculo, fn_busca_job())
-with open('saida/03-score.txt', "w", encoding="utf-8") as arquivo:
-    arquivo.write(prompt)
-
-
-
-
-
-
+# Exibir o gráfico no Streamlit
+st.plotly_chart(fig, use_container_width=True)

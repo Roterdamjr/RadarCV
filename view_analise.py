@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from google import genai
 from funcoes_ai_db import fn_busca_resumo, fn_busca_curriculo_db, fn_busca_job,fn_busca_opiniao,fn_gerar_score
 from funcoes import fn_inserir_analise_db,fn_exclui_analises_db,  fn_busca_curriculos_db,fn_exclui_analise_db, fn_busca_nomes_analisados_db
+from funcoes import fn_busca_nota_final
 import os 
 
 def fn_gera_response(prompt):
@@ -67,7 +68,7 @@ if st.button("Analisar"):
         nota = fn_gera_response(prompt)
         if nota:  
             st.write("Nota:", nota)
-
+    
     fn_inserir_analise_db(nome_candidato, resumo,opiniao,nota)
 
     st.write('Pronto!')

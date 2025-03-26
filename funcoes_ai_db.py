@@ -53,7 +53,6 @@ def fn_busca_resumo(curriculo):
 
             **Formato de Output Esperado:**
 
-            ```markdown
             ## Nome Completo
             nome_completo aqui
 
@@ -106,6 +105,7 @@ def fn_gerar_score(cv, job):
             5. **Pontos Fortes (Peso: 15%)**: Avalie a relevância dos pontos fortes para a vaga.
             6. **Pontos Fracos (Desconto de até 10%)**: Avalie a gravidade dos pontos fracos em relação à vaga.
 
+Ao final indique a pontuação final com o seguinte formato "Nota final do candidato: {nota}"
             Curriculo do candidato
             '''
    

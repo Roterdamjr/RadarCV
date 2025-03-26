@@ -1,0 +1,112 @@
+
+              "Objetivo:** Avaliar um currículo com base em uma vaga específica e calcular a pontuação final. A nota máxima é 10.0.
+              Fabiana Meireles dos Santos 
+47 years old - Brazilian 
+EDUCATION  
+Postgraduate in Oil & Gas Engineering - FUNCEFET 
+MBA Business Management - FGV 
+Licentiate degree in Language English and Portuguese - FAFIMA 
+Accounting Technician – Luiz Reid 
+ 
+WORK EXPERIENCE 
+ 
+VALARIS (3 months) 
+ 
+ Capex & Repair Advisor [Aug/2024 - Currently] 
+Responsible for the availability, repair, maintenance and work readiness of 
+shorebased capital equipment.  
+ 
+YINSON (2 years and 7 months) 
+ 
+ Procurement Coordinator [Apr/2023 – Aug/2024] 
+ Service Buyer Specialist [Feb/2022 – Mar/2023] 
+Accountable for negotiating specialized services, national and international 
+purchasing orders; management of contracts and amendments; coordinate 
+services for the mobilization and commissioning of FPSO for operation in 
+Brazil. 
+ 
+OCYAN S.A. (1 year and 3 months) 
+ 
+ Senior Procurement Analyst [Sep/2020 - Oct/2021] 
+Accountable for Subsea category for national and international purchasing 
+orders; management of contracts and annual price agreement; internalization 
+of items; accountable for negotiating specialized project for rigs on shipyard 
+stoppage. 
+ 
+VALARIS (19 years and 6 months) 
+ 
+ Sr Coordinator - Materials [Jul/2016 - Jul/2020] 
+Accountable for logistics and materials coordination, responsible for 
+operational and administrative personnel; management of capital spares 
+stored onshore; lead offshore material audits; monitor import and Export 
+processes; cost analysis focusing on saving. 
+ 
+ Sr Procurement Specialist [Aug/2013 - Jun/2016] 
+Accountable for international and national purchasing orders; coordinate the 
+hiring of third-party services onshore and offshore. 
+ 
+ Contracts Coordinator [Dec/2008 - Jul/2013] 
+Monitor operational performance of 11 rigs with different clients; frequently 
+assume the position of interim Contract Manager; review new contracts and 
+amendment, measurement report, ADPs and presentation for client’s 
+meetings. 
+ 
+ Service and Repair Coordinator – Services and Repairs [Feb/2001 - 
+Nov/2008] 
+Coordinate equipment inspection/repairs and preventive maintenance; 
+management and contracting specialized services for drilling units on shipyard 
+stoppage.
+ 
+OBJECTIVE  
+Supply Chain Supervisor / Procurement 
+Coordinator / Senior Procurement 
+Specialist  
+PROFILE  
+24 years working in the oil and gas
+industry with experience in Supply Chain 
+Department 
+and 
+Contracts 
+with 
+different clients. 
+Several successful disputes, avoiding 
+contractual penalties. 
+Experience 
+in 
+mobilization 
+and 
+demobilization of rigs, drill ships and 
+FPSO. 
+Supervision of the Materials Logistic 
+Department for 4 years. 
+Responsible for all activities of the 
+Supply Chain Department to finalize 
+VALARIS operations in Brazil. 
++55 22 99955-8656 
+fabymeireles@yahoo.com.br  
+http://linkedin.com/in/fabiana-
+meireles-00b13140  
+ 
+LANGUAGE   
+English - Fluent 
+
+              Por favor, gere um resumo do currículo fornecido, formatado em Markdown, seguindo rigorosamente o modelo abaixo. **Não adicione seções extras, tabelas ou qualquer outro tipo de formatação diferente da especificada.** Preencha cada seção com as informações relevantes, garantindo que o resumo seja preciso e focado.
+
+            **Formato de Output Esperado:**
+
+            ```markdown
+            ## Nome Completo
+            nome_completo aqui
+
+            ## Experiência
+            experiencia aqui
+
+            ## Habilidades
+            habilidades aqui
+
+            ## Educação
+            educacao aqui
+
+            ## Idiomas
+            idiomas aqui
+            

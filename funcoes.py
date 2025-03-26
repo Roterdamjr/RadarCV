@@ -73,7 +73,7 @@ def fn_exclui_curriculo_db(nome_procurado):
         return False
 
  
-def fn_inserir_analise_db(nome, resumo,opiniao,nota):
+def fn_inserir_analise_db(nome, resumo,opiniao,nota,):
     db = TinyDB('analises.json')
     analise = {
       'nome': nome,
@@ -116,24 +116,26 @@ def fn_busca_nota_final(nome):
         print(f"Nenhuma análise encontrada para {nome}.")
         return None  # Or some other appropriate value to indicate no result
 
-    # Access the first (and likely only) dictionary in the list
-    first_result = result_raw[0]
+    texto = str(result_raw[0])
 
-    # Convert the relevant part of the dictionary to a string for regex
-    result_text = str(first_result)
+    chave = 'Nota final do candidato'
+    try:
+        indice = texto.index(chave)
+        texto = texto[indice + len(chave):].strip()
+    except ValueError:
+        print(f"A string '{chave}' não foi encontrada no texto.")
 
-    pattern = r"(?i)Pontuação Final[:\s]*([\d,.]+(?:/\d{1,2})?)"
-    match = re.search(pattern, result_text)
+    padrao = r':\s*(\d+\.?\d*)'
+    resultado = re.search(padrao, texto)
 
-    if match:
-        nota_final = match.group(1)
-        #print(f"A pontuação final de {nome} é: {nota_final}")
+    if resultado:
+        nota_final = resultado.group(1)
+        #print(nota_final)
     else:
-        #print(f"Nenhuma pontuação final encontrada para {nome}.")
-        nota_final = None  # Or some other appropriate value
+        print("Nenhuma nota encontrada no texto.")
 
     return nota_final
+  
 
+#fn_busca_nota_final('Rosana')
 
-
-print(fn_busca_nota_final('Bart'))
