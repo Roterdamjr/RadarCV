@@ -22,55 +22,57 @@ def fn_gera_response(prompt):
         st.error(f"Erro ao gerar resposta da IA: {e}")
         return None
 
-st.title("Análise de Currículos")
 
-load_dotenv()
+def exibe_view_analise():
+    st.title("Análise de Currículos")
 
-
-st.header("Análises Realizadas")
-
-analises = fn_busca_nomes_analisados_db()
-if analises:
-    for analise in analises:
-        st.write(analise)
-else:
-    st.write("Nenhuma analise realizada ainda.")
-
-if st.button("Excluir"):
-    fn_exclui_analises_db()
-    st.success("Análises excluídas com sucesso!")
-
- 
-nome_candidato = st.selectbox("Selecione um Candidato:", [""] + fn_busca_curriculos_db())
-
-if st.button("Analisar"):
-    fn_exclui_analise_db(nome_candidato)
-
-    st.write(f"Analisando candidato: **{nome_candidato}**")
-    curriculo = fn_busca_curriculo_db(nome_candidato)
+    load_dotenv()
 
 
-    with st.status("Gerando resumo..."):
-        prompt = fn_busca_resumo(curriculo)
-        resumo = fn_gera_response(prompt)
-        if resumo:  
-            st.write("Resumo:", resumo)
+    st.header("Análises Realizadas")
 
-    with st.status("Gerando opinião..."):
-        prompt = fn_busca_opiniao(curriculo, fn_busca_job())
-        opiniao = fn_gera_response(prompt)
-        if opiniao:  
-            st.write("Opiniao:", opiniao)
+    analises = fn_busca_nomes_analisados_db()
+    if analises:
+        for analise in analises:
+            st.write(analise)
+    else:
+        st.write("Nenhuma analise realizada ainda.")
 
-    with st.status("Calculando nota..."):
-        prompt = fn_gerar_score(curriculo, fn_busca_job())
+    if st.button("Excluir"):
+        fn_exclui_analises_db()
+        st.success("Análises excluídas com sucesso!")
 
-        nota = fn_gera_response(prompt)
-        if nota:  
-            st.write("Nota:", nota)
     
-    fn_inserir_analise_db(nome_candidato, resumo,opiniao,nota)
+    nome_candidato = st.selectbox("Selecione um Candidato:", [""] + fn_busca_curriculos_db())
 
-    st.write('Pronto!')
+    if st.button("Analisar"):
+        fn_exclui_analise_db(nome_candidato)
+
+        st.write(f"Analisando candidato: **{nome_candidato}**")
+        curriculo = fn_busca_curriculo_db(nome_candidato)
+
+
+        with st.status("Gerando resumo..."):
+            prompt = fn_busca_resumo(curriculo)
+            resumo = fn_gera_response(prompt)
+            if resumo:  
+                st.write("Resumo:", resumo)
+
+        with st.status("Gerando opinião..."):
+            prompt = fn_busca_opiniao(curriculo, fn_busca_job())
+            opiniao = fn_gera_response(prompt)
+            if opiniao:  
+                st.write("Opiniao:", opiniao)
+
+        with st.status("Calculando nota..."):
+            prompt = fn_gerar_score(curriculo, fn_busca_job())
+
+            nota = fn_gera_response(prompt)
+            if nota:  
+                st.write("Nota:", nota)
+        
+        fn_inserir_analise_db(nome_candidato, resumo,opiniao,nota)
+
+        st.write('Pronto!')
 
 
