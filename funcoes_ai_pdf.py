@@ -42,7 +42,7 @@ def fn_busca_resumo(file_path):
 
             **Formato de Output Esperado:**
 
-            ```markdown
+           
             ## Nome Completo
             nome_completo aqui
 
